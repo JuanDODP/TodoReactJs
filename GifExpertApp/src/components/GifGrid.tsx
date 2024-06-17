@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { getGif } from "../helpers/getGif";
 import { GifItem } from "./GifItem";
+import { useFectchGifs } from "../hooks/useFectchGifs";
 
 export const GifGrid = ({ Category }) => {
   console.log({ Category });
-  const [images, setimages] = useState([]);
-  const getImges = async () => {
-    const newImages = await getGif(Category);
-    setimages(newImages);
-  };
-  useEffect(() => {
-    // getGif(Category);
-    getImges();
-    // console.log({Category})
-  }, []);
-  console.log("Las imagenes", images);
+  const {images, isLoading}=useFectchGifs(Category)
+  console.log("Las imagenes", images, {isLoading});
+  if(isLoading){
+    return <h1>Cargando...</h1>
+  }
   return (
     <>
       <h3>{Category}</h3>
